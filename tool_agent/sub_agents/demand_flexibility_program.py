@@ -11,6 +11,8 @@ API_SEARCH_ENDPOINT = os.getenv("base_url") + "search"
 API_CONFIRM_ENDPOINT = os.getenv("base_url") + "confirm"
 API_STATUS_ENDPOINT = os.getenv("base_url") + "status"
 
+# mapping for dfp provider -> id
+
 SEARCH_PAYLOAD_TEMPLATE = """
 {
     "context": {
@@ -144,6 +146,7 @@ def search_demand_flexibility_program_data(search_query: str) -> str:
             return "Error: BAP_ID, BAP_URI, BPP_ID, or BPP_URI environment variables are not set."
 
         transaction_id = str(uuid.uuid4())
+        message_id = str(uuid.uuid4())
 
         # ISO 8601 format timestamp with UTC timezone
         timestamp = datetime.now(timezone.utc).isoformat()
@@ -153,6 +156,7 @@ def search_demand_flexibility_program_data(search_query: str) -> str:
                                      .replace("{{bpp_id}}", bpp_id) \
                                      .replace("{{bpp_uri}}", bpp_uri) \
                                      .replace("{{transaction_id}}", transaction_id) \
+                                     .replace("{{message_id}}", message_id) \
                                      .replace("{{timestamp}}", timestamp)
 
         headers = {'Content-Type': 'application/json'}
@@ -196,6 +200,7 @@ def confirm_demand_flexibility_program_data(search_query: str) -> str:
             return "Error: BAP_ID, BAP_URI, BPP_ID, or BPP_URI environment variables are not set."
 
         transaction_id = str(uuid.uuid4())
+        message_id = str(uuid.uuid4())
 
         # ISO 8601 format timestamp with UTC timezone
         timestamp = datetime.now(timezone.utc).isoformat()
@@ -205,6 +210,7 @@ def confirm_demand_flexibility_program_data(search_query: str) -> str:
                                      .replace("{{bpp_id}}", bpp_id) \
                                      .replace("{{bpp_uri}}", bpp_uri) \
                                      .replace("{{transaction_id}}", transaction_id) \
+                                     .replace("{{message_id}}", message_id) \
                                      .replace("{{timestamp}}", timestamp)
 
         headers = {'Content-Type': 'application/json'}
@@ -248,6 +254,7 @@ def status_demand_flexibility_program_data(search_query: str) -> str:
             return "Error: BAP_ID, BAP_URI, BPP_ID, or BPP_URI environment variables are not set."
 
         transaction_id = str(uuid.uuid4())
+        message_id = str(uuid.uuid4())
 
         # ISO 8601 format timestamp with UTC timezone
         timestamp = datetime.now(timezone.utc).isoformat()
@@ -257,6 +264,7 @@ def status_demand_flexibility_program_data(search_query: str) -> str:
                                      .replace("{{bpp_id}}", bpp_id) \
                                      .replace("{{bpp_uri}}", bpp_uri) \
                                      .replace("{{transaction_id}}", transaction_id) \
+                                     .replace("{{message_id}}", message_id) \
                                      .replace("{{timestamp}}", timestamp)
 
         headers = {'Content-Type': 'application/json'}

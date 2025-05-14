@@ -7,7 +7,6 @@ from datetime import datetime, timezone
 
 load_dotenv()
 
-
 API_CONFIRM_ENDPOINT = os.getenv("base_url") + "confirm"
 API_SEARCH_ENDPOINT = os.getenv("base_url") + "search"
 API_SELECT_ENDPOINT = os.getenv("base_url") + "select"
@@ -22,6 +21,9 @@ SEARCH_PAYLOAD_TEMPLATE = """
         "location": {
             "country": {
                 "code": "USA"
+            },
+            "city": {
+                "code": "NANP:628"
             }
         },
         "version": "1.1.0",
@@ -35,10 +37,8 @@ SEARCH_PAYLOAD_TEMPLATE = """
     },
     "message": {
         "intent": {
-            "item": {
-                "descriptor": {
-                    "name": "Connection"
-                }
+            "descriptor": {
+                "name": "resi"
             }
         }
     }
@@ -70,11 +70,11 @@ SELECT_PAYLOAD_TEMPLATE = """
     "message": {
         "order": {
             "provider": {
-                "id": "334"
+                "id": "329"
             },
             "items": [
                 {
-                    "id": "471"
+                    "id": "466"
                 }
             ]
         }
@@ -82,36 +82,36 @@ SELECT_PAYLOAD_TEMPLATE = """
 }
 """
 
-INITIATE_PAYLOAD_TEMPLATE = """
+INIT_PAYLOAD_TEMPLATE = """
 {
-    "context": {
-        "domain": "deg:service",
-        "action": "init",
-        "location": {
-            "country": {
-                "code": "USA"
-            },
-            "city": {
-                "code": "NANP:628"
-            }
-        },
-        "version": "1.1.0",
-        "bap_id": "{{bap_id}}",
-        "bap_uri": "{{bap_uri}}",
-        "bpp_id": "{{bpp_id}}",
-        "bpp_uri": "{{bpp_uri}}",
-        "transaction_id": "{{transaction_id}}",
-        "message_id": "{{message_id}}",
-        "timestamp": "{{timestamp}}"
+  "context": {
+    "domain": "deg:service",
+    "action": "init",
+    "location": {
+      "country": {
+        "code": "USA"
+      },
+      "city": {
+        "code": "NANP:628"
+      }
     },
-    "message": {
-        "order": {
+    "version": "1.1.0",
+    "bap_id": "{{bap_id}}",
+    "bap_uri": "{{bap_uri}}",
+            "bpp_id": "{{bpp_id}}",
+    "bpp_uri": "{{bpp_uri}}",
+    "transaction_id": "{{transaction_id}}",
+    "message_id": "{{message_id}}",
+    "timestamp": "{{timestamp}}"
+  },
+  "message": {
+   "order": {
             "provider": {
-                "id": "334"
+                "id": "329"
             },
             "items": [
                 {
-                    "id": "471"
+                    "id": "466"
                 }
             ]
         }
@@ -139,21 +139,21 @@ CONFIRM_PAYLOAD_TEMPLATE = """
         "bpp_uri": "{{bpp_uri}}",
         "transaction_id": "{{transaction_id}}",
         "message_id": "{{message_id}}",
-        "timestamp": "{{timestamp}}"
+        "timestamp": "{{timestampp}}"
     },
     "message": {
         "order": {
             "provider": {
-                "id": "334"
+                "id": "329"
             },
             "items": [
                 {
-                    "id": "471"
+                    "id": "466"
                 }
             ],
             "fulfillments": [
                 {
-                    "id": "615",
+                    "id": "617",
                     "customer": {
                         "person": {
                             "name": "Lisa"
@@ -193,14 +193,14 @@ STATUS_PAYLOAD_TEMPLATE = """
         "timestamp": "{{timestamp}}"
     },
     "message": {
-        "order_id": "3779"
+        "order_id": "3774"
     }
 }
 """
 
-def search_connection_data(search_query: str) -> str:
+def search_solar_service_data(search_query: str) -> str:
     """
-    Searches for connection data based on a given search query.
+    Searches for solar service data based on a given search query.
     This function will be used as a tool by the agent.
 
      Returns:
@@ -251,9 +251,9 @@ def search_connection_data(search_query: str) -> str:
             pass
         return f"Error decoding JSON response: {json_err} - Response was: {error_details}"
     
-def select_connection_data(search_query: str) -> str:
+def select_solar_service_data(search_query: str) -> str:
     """
-    Selects connection data based on a given search query.
+    Selects for solar service data based on a given search query.
     This function will be used as a tool by the agent.
 
      Returns:
@@ -303,10 +303,10 @@ def select_connection_data(search_query: str) -> str:
         except Exception:
             pass
         return f"Error decoding JSON response: {json_err} - Response was: {error_details}"
-
-def initiate_connection_data(search_query: str) -> str:
+    
+def init_solar_service_data(search_query: str) -> str:
     """
-    Initiates connection data based on a given search query.
+    Initializes for solar service data based on a given search query.
     This function will be used as a tool by the agent.
 
      Returns:
@@ -327,7 +327,7 @@ def initiate_connection_data(search_query: str) -> str:
         # ISO 8601 format timestamp with UTC timezone
         timestamp = datetime.now(timezone.utc).isoformat()
 
-        current_payload = INITIATE_PAYLOAD_TEMPLATE.replace("{{bap_id}}", bap_id) \
+        current_payload = INIT_PAYLOAD_TEMPLATE.replace("{{bap_id}}", bap_id) \
                                      .replace("{{bap_uri}}", bap_uri) \
                                      .replace("{{bpp_id}}", bpp_id) \
                                      .replace("{{bpp_uri}}", bpp_uri) \
@@ -356,10 +356,10 @@ def initiate_connection_data(search_query: str) -> str:
         except Exception:
             pass
         return f"Error decoding JSON response: {json_err} - Response was: {error_details}"
-
-def confirm_connection_data(search_query: str) -> str:
+    
+def confirm_solar_service_data(search_query: str) -> str:
     """
-    Confirms connection data based on a given search query.
+    Confirms solar service data based on a given search query.
     This function will be used as a tool by the agent.
 
      Returns:
@@ -409,11 +409,10 @@ def confirm_connection_data(search_query: str) -> str:
         except Exception:
             pass
         return f"Error decoding JSON response: {json_err} - Response was: {error_details}"
-
-
-def status_connection_data(search_query: str) -> str:
+    
+def status_solar_service_data(search_query: str) -> str:
     """
-    Searches for status data based on a given search query.
+    Searches for status data for solar service based on a given search query.
     This function will be used as a tool by the agent.
 
      Returns:
