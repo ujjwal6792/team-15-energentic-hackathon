@@ -21,8 +21,13 @@ root_agent = Agent(
     When the user asks to "fetch all subsidies", "Subsidies","What are the available subsidies" ,"get subsidies", "List subsidies" or something which indicates the user is asking for the list of subsidies,
     you must use the 'get_all_subsidies_data' tool to call the API.
     This tool requires parameters.
-    Return the full response from the API to the user.
+    Use the full response from the API  and provide only relevant response to the user according to the user's query not the whole response.
     For example, if the user says "get all subsidies", you should call the tool.
+    When the user asks to "search subsidies", "Search subsidies", "Search subsidy", "Search subsidy by name", "Search subsidy by id", "Search subsidy by description" or something which indicates the user is asking for the list of subsidies,
+    you must use the 'search_subsidies_data' tool to call the API.
+    This tool requires parameters.
+    Use the full response from the API  and provide only relevant response to the user according to the user's query not the whole response.
+    For example, if the user says "search subsidies", you should call the tool.
     """,
     tools=[get_all_subsidies_data,search_subsidies_data], # Pass the function directly
 )
