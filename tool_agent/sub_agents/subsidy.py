@@ -1,0 +1,120 @@
+import requests
+from google.adk.agents import Agent
+from dotenv import load_dotenv
+import os
+import uuid
+from datetime import datetime, timezone
+
+load_dotenv()
+
+
+API_ENDPOINT = os.getenv("base_url") + "confirm"
+
+PAYLOAD_TEMPLATE = """
+{
+  "context": {
+    "domain": "deg:schemes",
+    "action": "confirm",
+    "location": {
+      "country": {
+        "code": "USA"
+      },
+      "city": {
+        "code": "NANP:628"
+      }
+    },
+    "version": "1.1.0",
+    "bap_id": "{{bap_id}}",
+    "bap_uri": "{{bap_uri}}",
+    "bpp_id": "{{bpp_id}}",
+    "bpp_uri": "{{bpp_uri}}",
+    "transaction_id": "{{transaction_id}}",
+    "message_id": "{{message_id}}",
+    "timestamp": "{{timestamp}}"
+  },
+  "message": {
+   "order": {
+            "provider": {
+                "id": "323"
+            },
+            "items": [
+                {
+                    "id": "459"
+
+                }
+            ],
+                         "fulfillments": [
+        {
+          "id": "615",
+          "customer": {
+            "person": {
+              "name": "Lisa"
+            },
+            "contact": {
+              "phone": "876756454",
+              "email": "LisaS@mailinator.com"
+            }
+          }
+        }
+      ]
+        }
+    }
+}
+"""
+
+def get_all_subsidies_data() -> str:
+    """
+    Calls the subsidies API to retrieve all subsidies data.
+    This function will be used as a tool by the agent.
+
+    Returns:
+        A string representation of the JSON response from the API, containing all subsidies.
+    """
+    try:
+        bap_id = os.getenv("bap_id")
+        bap_uri = os.getenv("bap_uri")
+        bpp_id = os.getenv("bpp_id")
+        bpp_uri = os.getenv("bpp_uri")
+
+        if not all([bap_id, bap_uri, bpp_id, bpp_uri]):
+            return "Error: BAP_ID, BAP_URI, BPP_ID, or BPP_URI environment variables are not set."
+
+        transaction_id = str(uuid.uuid4())
+        message_id = str(uuid.uuid4())
+        # ISO 8601 format timestamp with UTC timezone
+        timestamp = datetime.now(timezone.utc).isoformat()
+
+        current_payload = PAYLOAD_TEMPLATE.replace("{{bap_id}}", bap_id) \
+                                     .replace("{{bap_uri}}", bap_uri) \
+                                     .replace("{{bpp_id}}", bpp_id) \
+                                     .replace("{{bpp_uri}}", bpp_uri) \
+                                     .replace("{{transaction_id}}", transaction_id) \
+                                     .replace("{{message_id}}", message_id) \
+                                     .replace("{{timestamp}}", timestamp)
+
+        headers = {'Content-Type': 'application/json'}
+        response = requests.post(API_ENDPOINT, data=current_payload, headers=headers)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.HTTPError as http_err:
+        # Try to get more specific error information from the response body if available
+        error_details = ""
+        try:
+            error_details = response.text
+        except Exception:
+            pass # Ignore if response.text is not available or causes an error
+        return f"HTTP error occurred: {http_err} - {error_details}"
+    except requests.exceptions.RequestException as e:
+        return f"Error calling API: {e}"
+    except ValueError as json_err:
+        error_details = ""
+        try:
+            error_details = response.text
+        except Exception:
+            pass
+        return f"Error decoding JSON response: {json_err} - Response was: {error_details}"
+
+def search_subsidies_data(search_query: str) -> str:
+    """
+    Searches for subsidies data based on a given search query.
+    This function will be used as a tool by the agent."""
