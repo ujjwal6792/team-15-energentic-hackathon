@@ -10,33 +10,30 @@ from .sub_agents.connection import search_connection_data,select_connection_data
 from .sub_agents.solar_retail import search_solar_retail_data,select_solar_retail_data,init_solar_retail_data,confirm_solar_retail_data,status_solar_retail_data
 from .sub_agents.solar_service import search_solar_service_data,select_solar_service_data,init_solar_service_data,confirm_solar_service_data,status_solar_service_data
 
+import asyncio
+
 load_dotenv()
+from google.adk.sessions import InMemorySessionService, Session
 
+temp_service = InMemorySessionService()
+example_session: Session = temp_service.create_session(
+    app_name="tool_agent",
+    user_id="example_user",
+)
 
-    
+print(f"--- Examining Session Properties (Before Interaction) ---")
+print(f"ID (`id`):                {example_session.id}")
+print(f"Application Name (`app_name`): {example_session.app_name}")
+print(f"User ID (`user_id`):         {example_session.user_id}")
+print(f"Events (`events`):         {example_session.events}") # Initially empty
+print(f"Last Update (`last_update_time`): {example_session.last_update_time:.2f}")
+print(f"-------------------------------------------------------")
 
-# The function itself will be passed as a tool
-
+# Initialize the root_agent *first*
 root_agent = Agent(
     name="tool_agent",
     model="gemini-2.0-flash", # You can choose a different model if needed
     description="Agent that acts as an assistant to the user to get the list of Subsidies for solar panel installation provided by the government.",
-    # instruction="""
-    # You are an agent responsible for fetching all available subsidies information from an external API.
-
-    # When the user asks to "fetch all subsidies", "Subsidies","What are the available subsidies" ,"get subsidies", "List subsidies" or something which indicates the user is asking for the list of subsidies,
-    # you must use the 'get_all_subsidies_data' tool to call the API.
-    # This tool requires parameters.
-    # Use the full response from the API  and provide only relevant response to the user according to the user's query not the whole response.
-    # For example, if the user says "get all subsidies", you should call the tool.
-
-    # When the user asks to "search subsidies", "Search subsidies", "Search subsidy", "Search subsidy by name", "Search subsidy by id", "Search subsidy by description" or something which indicates the user is asking for the list of subsidies,
-    # you must use the 'search_subsidies_data' tool to call the API.
-    # This tool requires parameters.
-    # Use the full response from the API  and provide only relevant response to the user according to the user's query not the whole response.
-    # For example, if the user says "search subsidies", you should call the tool.
-
-    # """,
     instruction="""
     You are an intelligent agent responsible for fetching and managing solar-related services and subsidy information via API tools.
 
@@ -174,3 +171,20 @@ root_agent = Agent(
         status_solar_service_data
         ], # Pass the function directly
 )
+
+async def main():
+    response = await root_agent.handle(
+        text="What are the available subsidies?",
+        session_id=example_session.id,
+    )
+    print(f"Agent Response: {response}")
+
+    # After the interaction, retrieve the session details again
+    session_details_url = f"http://0.0.0.0:8000/apps/tool_agent/users/example_user/sessions"
+    new_response = requests.get(session_details_url)
+    print(f"--- Session Details After Interaction ---")
+    print(new_response.json())
+    print("---------------------------------------")
+
+if __name__ == "__main__":
+    asyncio.run(main())
