@@ -15,7 +15,7 @@ It serves as a personalized guide for users by:
 ### Team Members
 
 * Mudit Sarda
-* Amith Bhat
+* Amit Bhat
 * Vikas T C
 * Ujjwal Sharma
 * Adi Bhagavath
@@ -37,7 +37,9 @@ It serves as a personalized guide for users by:
 
 ```bash
 python3 -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate # For macOS
+.venv\Scripts\activate    # For Windows
+.venv\Scripts\Activate.ps1  # For PowerShell
 pip install google-adk
 ```
 
