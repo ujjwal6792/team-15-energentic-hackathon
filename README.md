@@ -77,6 +77,7 @@ pnpm build     # or: npm run build
 <p align="center">
   <img src="screenshots/Screenshot 2025-05-15 at 9.21.34 PM.png" width="300"/>
   <img src="screenshots/Screenshot 2025-05-15 at 9.21.43 PM.png" width="300"/>
+  <img src="screenshots/Screenshot 2025-05-16 at 12.23.42 AM.png" width="300"/>
 </p>
 
 ---
