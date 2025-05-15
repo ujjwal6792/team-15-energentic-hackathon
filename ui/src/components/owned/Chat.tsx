@@ -36,46 +36,53 @@ async function handleConversationStream(
   const reader = res.body?.getReader();
   const decoder = new TextDecoder("utf-8");
 
-  let buffer = "";
   let accumulatedContent = "";
+  let partialData = ""; // holds incomplete JSON between reads
 
   while (reader) {
     const { value, done } = await reader.read();
-    if (done) {
-      if (accumulatedContent) {
-        onFinalMessage({
-          id: crypto.randomUUID(),
-          role: "assistant",
-          content: accumulatedContent.trim(),
-          createdAt: new Date()
-        });
-      }
-      break;
-    }
+    if (done) break;
 
-    buffer += decoder.decode(value, { stream: true });
-    const lines = buffer.split("\n\n");
+    // Add current decoded value to partial data
+    partialData += decoder.decode(value, { stream: true });
 
-    for (const chunk of lines) {
-      if (!chunk.startsWith("data:")) continue;
+    // Split based on double newline (end of event message)
+    const segments = partialData.split("\n\n");
+
+    // Keep the last part for next read in case it’s incomplete
+    partialData = segments.pop() ?? "";
+
+    for (const segment of segments) {
+      if (!segment.trim().startsWith("data:")) continue;
+
+      const jsonChunk = segment.replace(/^data:\s*/, "");
 
       try {
-        const json = JSON.parse(chunk.replace(/^data:\s*/, ""));
-        const part = json?.content?.parts?.[0];
+        const parsed = JSON.parse(jsonChunk);
+        const part = parsed?.content?.parts?.[0];
         const text = part?.text;
 
-        if (text && json?.author === "tool_agent") {
+        if (text && parsed?.author === "tool_agent") {
           accumulatedContent += text;
           onStreamUpdate(accumulatedContent);
         }
-      } catch (e) {
-        console.warn("Error parsing chunk", chunk, e);
+      } catch (err) {
+        console.warn("Malformed JSON chunk skipped:", jsonChunk, err);
+        // Could optionally store bad chunks or retry logic
       }
     }
+  }
 
-    buffer = "";
+  if (accumulatedContent) {
+    onFinalMessage({
+      id: crypto.randomUUID(),
+      role: "assistant",
+      content: accumulatedContent.trim(),
+      createdAt: new Date()
+    });
   }
 }
+
 
 const Chat = (props: Props) => {
   const { session } = props;
@@ -99,19 +106,18 @@ const Chat = (props: Props) => {
       content: inputField,
       createdAt: new Date()
     };
-    console.log('abc: ', userMessage)
     setMessages((prev) => [...prev, userMessage]);
     setIsLoading(true);
     setStreamedText("");
-
+    const input = inputField
+    setInputField("");
     await handleConversationStream(
-      inputField,
+      input,
       session,
       (finalMsg) => {
         setMessages((prev) => [...prev, { ...finalMsg, content: finalMsg.content.split('\n')[0] }]);
         setStreamedText("");
         setIsLoading(false);
-        setInputField("");
       },
       (partial) => setStreamedText(partial)
     );
