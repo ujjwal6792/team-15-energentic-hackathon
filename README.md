@@ -50,6 +50,11 @@ pip install google-adk
 ```bash
 adk api_server
 ```
+#### For the ADK provided web view
+
+```bash
+ask web
+```
 
 ---
 
