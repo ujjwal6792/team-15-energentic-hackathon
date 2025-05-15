@@ -38,8 +38,8 @@ It serves as a personalized guide for users by:
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate # For macOS
-.venv\Scripts\activate    # For Windows
-.venv\Scripts\Activate.ps1  # For PowerShell
+# .venv\Scripts\activate  --> For Windows
+# .venv\Scripts\Activate.ps1 --> For PowerShell
 pip install google-adk
 ```
 
