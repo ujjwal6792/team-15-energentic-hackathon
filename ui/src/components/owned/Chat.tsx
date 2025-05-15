@@ -2,7 +2,7 @@ import { useState } from "react"
 import { ChatContainer, ChatForm, ChatMessages } from "@/components/ui/chat"
 import { MessageInput } from "@/components/ui/message-input"
 import { MessageList } from "@/components/ui/message-list"
-import { PromptSuggestions } from "../ui/prompt-suggestions"
+/* import { PromptSuggestions } from "../ui/prompt-suggestions" */
 import type { Message } from "../ui/chat-message"
 import type { SessionResponse } from "@/store"
 
