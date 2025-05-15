@@ -24,8 +24,9 @@ It serves as a personalized guide for users by:
 
 ### Tech Stack
 
-**Backend:** ADK, Vertex AI, Vector DB, Vector Search, FastAPI, Docker
-**Frontend:** React 19, Tailwind CSS, Zustand, Vite
+** Backend:** ADK, Vertex AI, Vector DB, Vector Search, FastAPI, Docker
+
+** Frontend:** React 19, Tailwind CSS, Zustand, Vite
 
 ---
 
