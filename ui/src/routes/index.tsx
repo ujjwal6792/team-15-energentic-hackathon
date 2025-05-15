@@ -9,7 +9,7 @@ export const Route = createFileRoute("/")({
 
 function HomePage() {
   return (
-    <div className="bg-[url('./solar-bg.svg')] bg-cover bg-center py-12 px-6 w-svw h-svh min-h-screen bg-white text-gray-900 md:px-20 lg:px-32 overflow-scroll">
+    <div className="bg-none py-12 px-6 w-svw h-svh min-h-screen text-gray-900 md:px-20 lg:px-32 overflow-scroll">
       <header className="text-center max-w-3xl mx-auto text-[#4c4f69]">
         <h1 className="text-4xl font-bold tracking-tight lg:text-5xl">
           Welcome to Smarter Solarization
