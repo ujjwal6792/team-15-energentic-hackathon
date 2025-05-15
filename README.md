@@ -68,7 +68,8 @@ pnpm build     # or: npm run build
 
 ### Demo Video Link
 
-*To be added*
+[Watch the video](https://youtu.be/KdCKZNBp98w)
+
 
 ---
 
