@@ -74,7 +74,10 @@ pnpm build     # or: npm run build
 
 ### Screenshots / Visuals
 
-*To be added*
+<p align="center">
+  <img src="screenshots/Screenshot 2025-05-15 at 9.21.34 PM.png" width="300"/>
+  <img src="Screenshot 2025-05-15 at 9.21.43 PM.png" width="300"/>
+</p>
 
 ---
 
