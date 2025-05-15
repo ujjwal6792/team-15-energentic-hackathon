@@ -145,11 +145,11 @@ const Chat = (props: Props) => {
         )}
       </ChatForm>
 
-      <PromptSuggestions
-        label=""
-        append={(msg) => setMessages((prev) => [...prev, { ...msg, id: crypto.randomUUID() }])}
-        suggestions={["subsidy?", "i want my status"]}
-      />
+      {/* <PromptSuggestions */}
+      {/*   label="" */}
+      {/*   append={(msg) => setMessages((prev) => [...prev, { ...msg, id: crypto.randomUUID() }])} */}
+      {/*   suggestions={["subsidy?", "i want my status"]} */}
+      {/* /> */}
     </ChatContainer>
   );
 };
