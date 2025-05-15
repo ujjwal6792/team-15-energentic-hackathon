@@ -1,0 +1,70 @@
+{
+	"info": {
+		"_postman_id": "b6599c87-a870-4d23-95f8-1f7f8f7cdd30",
+		"name": "adk-agent",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27224718"
+	},
+	"item": [
+		{
+			"name": "https://solar-agent.dhiway.net/apps/tool_agent/users/example_user/sessions/{{session_id}}",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://solar-agent.dhiway.net/apps/tool_agent/users/example_user/sessions/{{session_id}}",
+					"protocol": "https",
+					"host": [
+						"solar-agent",
+						"dhiway",
+						"net"
+					],
+					"path": [
+						"apps",
+						"tool_agent",
+						"users",
+						"example_user",
+						"sessions",
+						"{{session_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://solar-agent.dhiway.net/run_sse",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"app_name\": \"tool_agent\",\n  \"user_id\": \"example_user\",\n  \"session_id\": {{session_id}},\n  \"new_message\": {\n    \"role\": \"user\",\n    \"parts\": [\n      {\n        \"text\": \"Details about subsidy providers\"\n      }\n    ]\n  },\n  \"streaming\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://solar-agent.dhiway.net/run_sse",
+					"protocol": "https",
+					"host": [
+						"solar-agent",
+						"dhiway",
+						"net"
+					],
+					"path": [
+						"run_sse"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
