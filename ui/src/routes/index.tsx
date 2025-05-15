@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { createFileRoute } from '@tanstack/react-router'
 import { Link } from '@tanstack/react-router'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -46,7 +47,7 @@ function HomePage() {
         </Card>
       </section>
 
-      <section className="mt-20 text-center">
+      <section className="mt-8 md:mt-20 text-center">
         <h2 className="text-3xl font-bold mb-4 text-[#4c4f69]">Ready to Get Started?</h2>
         <p className="text-lg  mb-6 text-[#5c5f77]">
           No forms. No calls. Just a guided experience.
@@ -60,47 +61,52 @@ function HomePage() {
           </Button>
         </Link>
       </section>
+      <div className="max-w-2xl mt-12 mx-auto p-0">
+        <Tabs defaultValue="how-it-works" className="w-full px-2 py-2">
+          <TabsList className="grid grid-cols-3 gap-1 w-full mb-4">
+            <TabsTrigger value="how-it-works">Process</TabsTrigger>
+            <TabsTrigger value="add-battery">Battery</TabsTrigger>
+            <TabsTrigger value="control">Control</TabsTrigger>
+          </TabsList>
 
-      <section className="mt-16 max-w-4xl mx-auto">
-        <h2 className="text-2xl font-bold mb-4">How It Works</h2>
-        <ul className="space-y-4">
-          <li>
-            <strong>Step 1:</strong> You Say "Go" — nothing moves without your consent.
-          </li>
-          <li>
-            <strong>Step 2:</strong> Site Survey & Custom Plan — we generate battery-ready system designs.
-          </li>
-          <li>
-            <strong>Step 3:</strong> Install, Permit & Interconnect — we handle every detail.
-          </li>
-          <li>
-            <strong>Step 4:</strong> Activate Your Power — register, enable net metering, and optional grid rewards.
-          </li>
-        </ul>
-      </section>
+          <TabsContent value="how-it-works">
+            <Card className='min-w-64 border-none bg-[#F9F5DD]/40 text-[#4c4f69]'>
+              <CardContent className="space-y-4 p-4">
+                <p><strong>Step 1:</strong> You Say "Go" — nothing moves without your consent.</p>
+                <p><strong>Step 2:</strong> Site Survey & Custom Plan — we generate battery-ready system designs.</p>
+                <p><strong>Step 3:</strong> Install, Permit & Interconnect — we handle every detail.</p>
+                <p><strong>Step 4:</strong> Activate Your Power — register, enable net metering, and optional grid rewards.</p>
+              </CardContent>
+            </Card>
+          </TabsContent>
 
-      <section className="mt-16 max-w-4xl mx-auto">
-        <h2 className="text-2xl font-bold mb-4">Add a Battery. Unlock More.</h2>
-        <p className=" mb-2">Include backup power to:</p>
-        <ul className="list-disc list-inside">
-          <li>Stay resilient during outages ⚡</li>
-          <li>Earn rewards in grid events 💵</li>
-          <li>Enable peak-load flexibility and future smart incentives</li>
-        </ul>
-      </section>
+          <TabsContent value="add-battery">
+            <Card className='min-w-64 border-none bg-[#F9F5DD]/40 text-[#4c4f69]'>
+              <CardContent className="space-y-4 p-4">
+                <p className="text-lg font-semibold">Include backup power to:</p>
+                <ul className="list-disc list-inside space-y-1">
+                  <li>Stay resilient during outages ⚡</li>
+                  <li>Earn rewards in grid events 💸</li>
+                  <li>Enable peak-load flexibility and future smart incentives</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </TabsContent>
 
-      <section className="mt-16 max-w-4xl mx-auto">
-        <h2 className="text-2xl font-bold mb-4">You're In Control, Always</h2>
-        <p className=" mb-4">
-          You’ll receive:
-        </p>
-        <ul className="list-disc list-inside ">
-          <li>A live dashboard to track installs, permits, and savings</li>
-          <li>Participation options with manual opt-in only</li>
-          <li>Major update notifications (or weekly check-ins—your choice)</li>
-        </ul>
-      </section>
-
+          <TabsContent value="control">
+            <Card className='min-w-64 border-none bg-[#F9F5DD]/40 text-[#4c4f69]'>
+              <CardContent className="space-y-4 p-4">
+                <p className="text-lg font-semibold">You’ll receive:</p>
+                <ul className="list-disc list-inside space-y-1">
+                  <li>A live dashboard to track installs, permits, and savings</li>
+                  <li>Participation options with manual opt-in only</li>
+                  <li>Major update notifications (or weekly check-ins — your choice)</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   )
 }

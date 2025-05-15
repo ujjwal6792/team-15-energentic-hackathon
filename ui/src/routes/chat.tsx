@@ -8,7 +8,7 @@ export const Route = createFileRoute('/chat')({
 })
 
 function RouteComponent() {
-  return <div className="bg-none relative px-4 py-2 flex items-end justify-center w-svw h-svh">
+  return <div className="bg-none relative px-4 py-2 flex items-end justify-center w-full h-svh">
     <Link to={'/'}>
       <Button variant='link' className='absolute top-4 left-0 text-center' >
         <ChevronLeftIcon /> Back
