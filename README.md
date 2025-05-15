@@ -1,9 +1,16 @@
-### Follow the commands to run the project
+# Project Setup and Agent Interaction
 
-```python -m venv .venv```
-```source .venv/bin/activate```
-```pip install google-adk```
-```pip show google-adk```
+### 🚀 Follow the commands to run the project
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install google-adk
+pip show google-adk
+```
 
 ### Interact with the agent on web
-```adk web```
+
+```bash
+adk web
+```
