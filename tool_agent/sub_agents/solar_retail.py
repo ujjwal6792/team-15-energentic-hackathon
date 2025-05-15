@@ -7,7 +7,6 @@ from datetime import datetime, timezone
 
 load_dotenv()
 
-
 API_CONFIRM_ENDPOINT = os.getenv("base_url") + "confirm"
 API_SEARCH_ENDPOINT = os.getenv("base_url") + "search"
 API_SELECT_ENDPOINT = os.getenv("base_url") + "select"
@@ -17,11 +16,14 @@ API_STATUS_ENDPOINT = os.getenv("base_url") + "status"
 SEARCH_PAYLOAD_TEMPLATE = """
 {
     "context": {
-        "domain": "deg:service",
+        "domain": "deg:retail",
         "action": "search",
         "location": {
             "country": {
                 "code": "USA"
+            },
+            "city": {
+                "code": "NANP:628"
             }
         },
         "version": "1.1.0",
@@ -37,7 +39,7 @@ SEARCH_PAYLOAD_TEMPLATE = """
         "intent": {
             "item": {
                 "descriptor": {
-                    "name": "Connection"
+                    "name": "solar"
                 }
             }
         }
@@ -47,34 +49,34 @@ SEARCH_PAYLOAD_TEMPLATE = """
 
 SELECT_PAYLOAD_TEMPLATE = """
 {
-    "context": {
-        "domain": "deg:service",
-        "action": "select",
-        "location": {
-            "country": {
-                "code": "USA"
-            },
-            "city": {
-                "code": "NANP:628"
-            }
-        },
-        "version": "1.1.0",
-        "bap_id": "{{bap_id}}",
-        "bap_uri": "{{bap_uri}}",
-        "bpp_id": "{{bpp_id}}",
-        "bpp_uri": "{{bpp_uri}}",
-        "transaction_id": "{{transaction_id}}",
-        "message_id": "{{message_id}}",
-        "timestamp": "{{timestamp}}"
+  "context": {
+    "domain": "deg:retail",
+    "action": "select",
+    "location": {
+      "country": {
+        "code": "USA"
+      },
+      "city": {
+        "code": "NANP:628"
+      }
     },
-    "message": {
-        "order": {
+    "version": "1.1.0",
+    "bap_id": "{{bap_id}}",
+    "bap_uri": "{{bap_uri}}",
+            "bpp_id": "{{bpp_id}}",
+    "bpp_uri": "{{bpp_uri}}",
+    "transaction_id": "{{transaction_id}}",
+    "message_id": "{{message_id}}",
+    "timestamp": "{{timestamp}}"
+  },
+  "message": {
+   "order": {
             "provider": {
-                "id": "334"
+                "id": "27"
             },
             "items": [
                 {
-                    "id": "471"
+                    "id": "33"
                 }
             ]
         }
@@ -82,36 +84,36 @@ SELECT_PAYLOAD_TEMPLATE = """
 }
 """
 
-INITIATE_PAYLOAD_TEMPLATE = """
+INIT_PAYLOAD_TEMPLATE = """
 {
-    "context": {
-        "domain": "deg:service",
-        "action": "init",
-        "location": {
-            "country": {
-                "code": "USA"
-            },
-            "city": {
-                "code": "NANP:628"
-            }
-        },
-        "version": "1.1.0",
-        "bap_id": "{{bap_id}}",
-        "bap_uri": "{{bap_uri}}",
-        "bpp_id": "{{bpp_id}}",
-        "bpp_uri": "{{bpp_uri}}",
-        "transaction_id": "{{transaction_id}}",
-        "message_id": "{{message_id}}",
-        "timestamp": "{{timestamp}}"
+  "context": {
+    "domain": "deg:retail",
+    "action": "init",
+    "location": {
+      "country": {
+        "code": "USA"
+      },
+      "city": {
+        "code": "NANP:628"
+      }
     },
-    "message": {
-        "order": {
+    "version": "1.1.0",
+    "bap_id": "{{bap_id}}",
+    "bap_uri": "{{bap_uri}}",
+            "bpp_id": "{{bpp_id}}",
+    "bpp_uri": "{{bpp_uri}}",
+    "transaction_id": "{{transaction_id}}",
+    "message_id": "{{message_id}}",
+    "timestamp": "{{timestamp}}"
+  },
+  "message": {
+   "order": {
             "provider": {
-                "id": "334"
+                "id": "27"
             },
             "items": [
                 {
-                    "id": "471"
+                    "id": "33"
                 }
             ]
         }
@@ -121,50 +123,50 @@ INITIATE_PAYLOAD_TEMPLATE = """
 
 CONFIRM_PAYLOAD_TEMPLATE = """
 {
-    "context": {
-        "domain": "deg:service",
-        "action": "confirm",
-        "location": {
-            "country": {
-                "code": "USA"
-            },
-            "city": {
-                "code": "NANP:628"
-            }
-        },
-        "version": "1.1.0",
-        "bap_id": "{{bap_id}}",
-        "bap_uri": "{{bap_uri}}",
-        "bpp_id": "{{bpp_id}}",
-        "bpp_uri": "{{bpp_uri}}",
-        "transaction_id": "{{transaction_id}}",
-        "message_id": "{{message_id}}",
-        "timestamp": "{{timestamp}}"
+  "context": {
+    "domain": "deg:retail",
+    "action": "confirm",
+    "location": {
+      "country": {
+        "code": "USA"
+      },
+      "city": {
+        "code": "NANP:628"
+      }
     },
-    "message": {
-        "order": {
+    "version": "1.1.0",
+    "bap_id": "{{bap_id}}",
+    "bap_uri": "{{bap_uri}}",
+            "bpp_id": "{{bpp_id}}",
+    "bpp_uri": "{{bpp_uri}}",
+    "transaction_id": "{{transaction_id}}",
+    "message_id": "{{message_id}}",
+    "timestamp": "{{timestamp}}"
+  },
+  "message": {
+   "order": {
             "provider": {
-                "id": "334"
+                "id": "27"
             },
             "items": [
                 {
-                    "id": "471"
+                    "id": "33"
                 }
             ],
-            "fulfillments": [
-                {
-                    "id": "615",
-                    "customer": {
-                        "person": {
-                            "name": "Lisa"
-                        },
-                        "contact": {
-                            "phone": "876756454",
-                            "email": "LisaS@mailinator.com"
-                        }
-                    }
-                }
-            ]
+                  "fulfillments": [
+        {
+          "id": "3",
+          "customer": {
+            "person": {
+              "name": "Mudit"
+            },
+            "contact": {
+              "phone": "9714927300",
+              "email": "LisaS@mailinator.com"
+            }
+          }
+        }
+      ]
         }
     }
 }
@@ -172,35 +174,36 @@ CONFIRM_PAYLOAD_TEMPLATE = """
 
 STATUS_PAYLOAD_TEMPLATE = """
 {
-    "context": {
-        "domain": "deg:service",
-        "action": "status",
-        "location": {
-            "country": {
-                "code": "USA"
-            },
-            "city": {
-                "code": "NANP:628"
-            }
-        },
-        "version": "1.1.0",
-        "bap_id": "{{bap_id}}",
-        "bap_uri": "{{bap_uri}}",
-        "bpp_id": "{{bpp_id}}",
-        "bpp_uri": "{{bpp_uri}}",
-        "transaction_id": "{{transaction_id}}",
-        "message_id": "{{message_id}}",
-        "timestamp": "{{timestamp}}"
+  "context": {
+    "domain": "deg:retail",
+    "action": "status",
+    "location": {
+      "country": {
+        "code": "USA"
+      },
+      "city": {
+        "code": "NANP:628"
+      }
     },
-    "message": {
-        "order_id": "3779"
-    }
+    "version": "1.1.0",
+    "bap_id": "{{bap_id}}",
+    "bap_uri": "{{bap_uri}}",
+            "bpp_id": "{{bpp_id}}",
+    "bpp_uri": "{{bpp_uri}}",
+    "transaction_id": "{{transaction_id}}",
+    "message_id": "{{message_idD}}",
+    "timestamp": "{{timestamp}}"
+  },
+  "message": {
+    "order_id": "3784"
+
+  }
 }
 """
 
-def search_connection_data(search_query: str) -> str:
+def search_solar_retail_data(search_query: str) -> str:
     """
-    Searches for connection data based on a given search query.
+    Searches for solar retail data based on a given search query.
     This function will be used as a tool by the agent.
 
      Returns:
@@ -251,9 +254,9 @@ def search_connection_data(search_query: str) -> str:
             pass
         return f"Error decoding JSON response: {json_err} - Response was: {error_details}"
     
-def select_connection_data(search_query: str) -> str:
+def select_solar_retail_data(search_query: str) -> str:
     """
-    Selects connection data based on a given search query.
+    Selects for solar retail data based on a given search query.
     This function will be used as a tool by the agent.
 
      Returns:
@@ -303,10 +306,10 @@ def select_connection_data(search_query: str) -> str:
         except Exception:
             pass
         return f"Error decoding JSON response: {json_err} - Response was: {error_details}"
-
-def initiate_connection_data(search_query: str) -> str:
+    
+def init_solar_retail_data(search_query: str) -> str:
     """
-    Initiates connection data based on a given search query.
+    Initializes for solar retail data based on a given search query.
     This function will be used as a tool by the agent.
 
      Returns:
@@ -327,7 +330,7 @@ def initiate_connection_data(search_query: str) -> str:
         # ISO 8601 format timestamp with UTC timezone
         timestamp = datetime.now(timezone.utc).isoformat()
 
-        current_payload = INITIATE_PAYLOAD_TEMPLATE.replace("{{bap_id}}", bap_id) \
+        current_payload = INIT_PAYLOAD_TEMPLATE.replace("{{bap_id}}", bap_id) \
                                      .replace("{{bap_uri}}", bap_uri) \
                                      .replace("{{bpp_id}}", bpp_id) \
                                      .replace("{{bpp_uri}}", bpp_uri) \
@@ -356,10 +359,10 @@ def initiate_connection_data(search_query: str) -> str:
         except Exception:
             pass
         return f"Error decoding JSON response: {json_err} - Response was: {error_details}"
-
-def confirm_connection_data(search_query: str) -> str:
+    
+def confirm_solar_retail_data(search_query: str) -> str:
     """
-    Confirms connection data based on a given search query.
+    Confirms solar retail data based on a given search query.
     This function will be used as a tool by the agent.
 
      Returns:
@@ -409,11 +412,10 @@ def confirm_connection_data(search_query: str) -> str:
         except Exception:
             pass
         return f"Error decoding JSON response: {json_err} - Response was: {error_details}"
-
-
-def status_connection_data(search_query: str) -> str:
+    
+def status_solar_retail_data(search_query: str) -> str:
     """
-    Searches for status data based on a given search query.
+    Searches for status data for solar retail based on a given search query.
     This function will be used as a tool by the agent.
 
      Returns:
