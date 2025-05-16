@@ -2,7 +2,7 @@ import { useState } from "react"
 import { ChatContainer, ChatForm, ChatMessages } from "@/components/ui/chat"
 import { MessageInput } from "@/components/ui/message-input"
 import { MessageList } from "@/components/ui/message-list"
-/* import { PromptSuggestions } from "../ui/prompt-suggestions" */
+import { PromptSuggestions } from "../ui/prompt-suggestions"
 import type { Message } from "../ui/chat-message"
 import type { SessionResponse } from "@/store"
 
@@ -134,7 +134,19 @@ const Chat = (props: Props) => {
 
   return (
     <ChatContainer className="max-w-3xl grow">
-      {!isEmpty && (
+      {isEmpty ? <div className="grow min-h-[50svh]">
+        <PromptSuggestions
+          label="try asking about: "
+          append={(msg) => setMessages((prev) => [...prev, { ...msg, id: crypto.randomUUID() }])}
+          suggestions={[
+            "Show me available solar subsidies",
+            "Search for demand flexibility programs",
+            "How do I connect solar panels to the grid?",
+            "Find solar panel retailers near me",
+            "What installation services are available?"
+          ]}
+        />
+      </div> : (
         <ChatMessages messages={allMessages}>
           <MessageList messages={allMessages} isTyping={isTyping} />
         </ChatMessages>
@@ -143,6 +155,7 @@ const Chat = (props: Props) => {
       <ChatForm className="mt-auto" isPending={isLoading || isTyping} handleSubmit={handleSubmit as any}>
         {() => (
           <MessageInput
+            placeholder="Ask about solar subsidies, programs, or services..."
             value={inputField}
             onChange={(e) => setInputField(e.target.value)}
             isGenerating={isLoading}
@@ -151,11 +164,6 @@ const Chat = (props: Props) => {
         )}
       </ChatForm>
 
-      {/* <PromptSuggestions */}
-      {/*   label="" */}
-      {/*   append={(msg) => setMessages((prev) => [...prev, { ...msg, id: crypto.randomUUID() }])} */}
-      {/*   suggestions={["subsidy?", "i want my status"]} */}
-      {/* /> */}
     </ChatContainer>
   );
 };
