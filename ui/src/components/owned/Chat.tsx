@@ -52,7 +52,7 @@ async function handleConversationStream(
     // Keep the last part for next read in case it’s incomplete
     partialData = segments.pop() ?? "";
 
-    for (const segment of segments) {
+    for (const segment of segments.slice(0, -1)) {
       if (!segment.trim().startsWith("data:")) continue;
 
       const jsonChunk = segment.replace(/^data:\s*/, "");
@@ -115,7 +115,7 @@ const Chat = (props: Props) => {
       input,
       session,
       (finalMsg) => {
-        setMessages((prev) => [...prev, { ...finalMsg, content: finalMsg.content.split('\n')[0] }]);
+        setMessages((prev) => [...prev, { ...finalMsg, content: finalMsg.content }]);
         setStreamedText("");
         setIsLoading(false);
       },
