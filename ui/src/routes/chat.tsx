@@ -19,7 +19,7 @@ function RouteComponent() {
   if (loading || !session) return <p>Creating session...</p>
   if (error) return <p>Error: {error}</p>
 
-  return <div className="bg-none relative px-4 py-2 flex items-end justify-center w-full h-svh">
+  return <div className="bg-none relative px-4 py-2 flex items-end justify-center w-full h-dvh">
     <Link to={'/'}>
       <Button variant='link' className='absolute top-4 left-0 text-center' >
         <ChevronLeftIcon /> Back

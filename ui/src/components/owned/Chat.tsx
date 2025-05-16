@@ -134,7 +134,7 @@ const Chat = (props: Props) => {
 
   return (
     <ChatContainer className="max-w-3xl grow">
-      {isEmpty ? <div className="grow min-h-[50svh]">
+      {isEmpty ? <div className="grow min-h-[50dvh]">
         <PromptSuggestions
           label="try asking about: "
           append={(a) => {
