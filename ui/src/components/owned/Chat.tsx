@@ -96,20 +96,20 @@ const Chat = (props: Props) => {
   const isEmpty = messages.length === 0;
   const isTyping = lastMessage?.role === "user" && isLoading;
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!inputField.trim()) return;
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement> | null, text: string | null) => {
+    e?.preventDefault();
+    if (!inputField.trim() && !text) return;
 
     const userMessage: Message = {
       id: crypto.randomUUID(),
       role: "user",
-      content: inputField,
+      content: text || inputField,
       createdAt: new Date()
     };
     setMessages((prev) => [...prev, userMessage]);
     setIsLoading(true);
     setStreamedText("");
-    const input = inputField
+    const input = text || inputField
     setInputField("");
     await handleConversationStream(
       input,
@@ -137,7 +137,9 @@ const Chat = (props: Props) => {
       {isEmpty ? <div className="grow min-h-[50svh]">
         <PromptSuggestions
           label="try asking about: "
-          append={(msg) => setMessages((prev) => [...prev, { ...msg, id: crypto.randomUUID() }])}
+          append={(a) => {
+            return handleSubmit(null, a.content)
+          }}
           suggestions={[
             "Show me available solar subsidies",
             "Search for demand flexibility programs",
